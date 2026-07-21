@@ -20,7 +20,13 @@ Verification date: 2026-07-21
 
 ## CI evidence
 
-The workflow has independent backend, PostgreSQL, PyQGIS container, and frontend/Node jobs. The final successful main-branch run and immutable commit SHA are recorded here after publication.
+Public pull-request validation passed all independent backend, PostgreSQL, PyQGIS container, and frontend/Node jobs:
+
+- Run: [29818139429](https://github.com/Praharsh-Projects/network-offer-geodata-workbench/actions/runs/29818139429)
+- Validated commit: `1afbae334eca1b8cce8e24e48bb3fe350e3fed86`
+- Result: 4 of 4 jobs successful, including QGIS 3.40 container and PostgreSQL 16 integration contracts
+
+After merge, the repository CI badge and GitHub Actions history provide the current `main` result without making this record self-referential.
 
 ## Evidence boundaries
 
