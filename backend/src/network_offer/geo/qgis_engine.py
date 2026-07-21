@@ -42,7 +42,7 @@ class QgisGeometryEngine:
         from qgis.core import (
             QgsCoordinateReferenceSystem,
             QgsCoordinateTransform,
-            QgsGeometry,
+            QgsJsonUtils,
             QgsProject,
         )
 
@@ -58,7 +58,7 @@ class QgisGeometryEngine:
         coordinate_transform = QgsCoordinateTransform(source, target, QgsProject.instance())
 
         projected_sites = [
-            self._project_geometry(site["geometry"], coordinate_transform, QgsGeometry)
+            self._project_geometry(site["geometry"], coordinate_transform, QgsJsonUtils)
             for site in sites
         ]
         total_sites = len(projected_sites)
@@ -67,7 +67,7 @@ class QgisGeometryEngine:
         for feature in segments:
             segment_id, name, capacity = segment_properties(feature)
             corridor = self._project_geometry(
-                feature["geometry"], coordinate_transform, QgsGeometry
+                feature["geometry"], coordinate_transform, QgsJsonUtils
             )
             demand_count = sum(
                 corridor.distance(site) <= request.maximum_distance_m for site in projected_sites
@@ -87,9 +87,9 @@ class QgisGeometryEngine:
 
     @staticmethod
     def _project_geometry(
-        geometry: dict[str, Any], coordinate_transform: Any, geometry_class: Any
+        geometry: dict[str, Any], coordinate_transform: Any, json_utils: Any
     ) -> Any:
-        projected = geometry_class.fromJson(json.dumps(geometry).encode("utf-8"))
+        projected = json_utils.geometryFromGeoJson(json.dumps(geometry))
         if projected.isNull() or projected.isEmpty():
             raise ValueError("PyQGIS could not parse GeoJSON geometry")
         result = projected.transform(coordinate_transform)
