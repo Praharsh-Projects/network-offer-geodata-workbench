@@ -3,24 +3,28 @@ FROM qgis/qgis:3.40.15-noble AS base
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     QT_QPA_PLATFORM=offscreen \
-    QGIS_PREFIX_PATH=/usr
+    QGIS_PREFIX_PATH=/usr \
+    VIRTUAL_ENV=/opt/netgeo-venv \
+    PATH="/opt/netgeo-venv/bin:$PATH"
 
 ENTRYPOINT []
 
 WORKDIR /app
 
 RUN apt-get update \
-    && apt-get install --yes --no-install-recommends curl python3-pip \
+    && apt-get install --yes --no-install-recommends curl python3-pip python3-venv \
+    && python3 -m venv --system-site-packages /opt/netgeo-venv \
+    && /opt/netgeo-venv/bin/python -m pip install --no-cache-dir --upgrade pip \
     && rm -rf /var/lib/apt/lists/*
 
 COPY backend /app/backend
 COPY fixtures /app/fixtures
 
-RUN python3 -m pip install --break-system-packages --no-cache-dir /app/backend
+RUN python3 -m pip install --no-cache-dir /app/backend
 
 FROM base AS test
 
-RUN python3 -m pip install --break-system-packages --no-cache-dir "/app/backend[dev]"
+RUN python3 -m pip install --no-cache-dir "/app/backend[dev]"
 WORKDIR /app/backend
 CMD ["python3", "-m", "pytest", "-m", "qgis"]
 

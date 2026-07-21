@@ -87,7 +87,10 @@ def test_postgres_repository_round_trip() -> None:
         pytest.skip("NETGEO_TEST_DATABASE_URL is not configured")
     repository = PostgresEvaluationRepository(database_url)
     repository.ensure_schema()
-    evaluation_id = repository.save(EvaluationRequest(), empty_result("postgres-round-trip"))
+    evaluation_id = repository.save(
+        EvaluationRequest(),
+        empty_result("00000000-0000-4000-8000-000000000001"),
+    )
     records = repository.list_recent(10)
     match = next(record for record in records if record.evaluation_id == evaluation_id)
     assert match.result.engine == "shapely"
