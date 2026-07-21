@@ -1,0 +1,61 @@
+{
+  "type": "FeatureCollection",
+  "name": "synthetic_network_segments",
+  "crs": {
+    "type": "name",
+    "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "SEG-CENTRAL",
+      "properties": {
+        "segment_id": "SEG-CENTRAL",
+        "name": "Central exchange corridor",
+        "available_capacity_gbps": 80
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.6060, 37.1730],
+          [-3.5960, 37.1780],
+          [-3.5860, 37.1830]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "SEG-NORTH",
+      "properties": {
+        "segment_id": "SEG-NORTH",
+        "name": "Northern aggregation corridor",
+        "available_capacity_gbps": 60
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.6250, 37.1900],
+          [-3.6120, 37.1860],
+          [-3.6000, 37.1820]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "SEG-EAST",
+      "properties": {
+        "segment_id": "SEG-EAST",
+        "name": "Eastern service corridor",
+        "available_capacity_gbps": 100
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-3.5750, 37.1650],
+          [-3.5680, 37.1770],
+          [-3.5600, 37.1900]
+        ]
+      }
+    }
+  ]
+}

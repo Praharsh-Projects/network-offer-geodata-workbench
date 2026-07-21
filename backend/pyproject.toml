@@ -1,0 +1,76 @@
+[build-system]
+requires = ["setuptools>=80"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "network-offer-geodata-workbench"
+version = "0.1.0"
+description = "OGC geodata workflow and network offer evaluation service"
+readme = {text = "OGC network offer evaluation service with portable and PyQGIS geometry engines.", content-type = "text/markdown"}
+requires-python = ">=3.12"
+dependencies = [
+  "defusedxml>=0.7.1,<1",
+  "fastapi>=0.116,<1",
+  "httpx>=0.28,<1",
+  "psycopg[binary]>=3.2,<4",
+  "pydantic-settings>=2.10,<3",
+  "pyproj>=3.6,<4",
+  "shapely>=2.1,<3",
+  "uvicorn[standard]>=0.35,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.17,<2",
+  "pip-audit>=2.9,<3",
+  "pytest>=9.0.3,<10",
+  "pytest-asyncio>=1.1,<2",
+  "pytest-cov>=6.2,<8",
+  "ruff>=0.12,<1",
+  "types-defusedxml>=0.7.0.20250822",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+  "qgis: requires an installed PyQGIS runtime",
+  "postgres: requires NETGEO_TEST_DATABASE_URL",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["network_offer"]
+omit = ["src/network_offer/geo/qgis_engine.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 90
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC", "S"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unreachable = true
+plugins = ["pydantic.mypy"]
+exclude = ["src/network_offer/geo/qgis_engine.py"]
+
+[[tool.mypy.overrides]]
+module = ["shapely.*", "pyproj.*", "psycopg.*"]
+ignore_missing_imports = true
