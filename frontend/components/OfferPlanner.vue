@@ -16,6 +16,11 @@ const minimumSites = ref(2)
 const result = ref<EvaluationResult | null>(null)
 const status = ref<'idle' | 'loading' | 'success' | 'error'>('idle')
 const errorMessage = ref('')
+const hydrated = ref(false)
+
+onMounted(() => {
+  hydrated.value = true
+})
 
 const candidates = computed(() => (result.value ? candidateViews(result.value) : []))
 const recommended = computed(() =>
@@ -79,7 +84,7 @@ async function runEvaluation() {
           required
         >
 
-        <button type="submit" :disabled="status === 'loading'">
+        <button type="submit" :disabled="!hydrated || status === 'loading'">
           <span v-if="status === 'loading'">Evaluating corridors...</span>
           <span v-else>Run offer evaluation</span>
         </button>

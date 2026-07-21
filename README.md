@@ -61,7 +61,7 @@ make build
 Local core verification on 2026-07-21 produced:
 
 - 47 Python tests passed (3 environment-specific tests deselected), with 98.64% branch coverage.
-- 5 Vitest tests passed, with 100% statement/line/function and 81.96% branch coverage.
+- 5 Vitest tests passed, with 100% statement/line/function and 82.53% branch coverage.
 - 1 Chromium Playwright workflow passed, including the Node runtime health route.
 - Nuxt production build and live desktop/mobile browser checks passed; the live fixture flow recommended `SEG-EAST` from three candidates.
 

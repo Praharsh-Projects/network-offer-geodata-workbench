@@ -12,7 +12,7 @@ Verification date: 2026-07-21
 | Python branch coverage | 98.64% |
 | Nuxt typecheck | Passed |
 | Vitest | 5 passed |
-| Frontend coverage | 100% statements/lines/functions; 81.96% branches |
+| Frontend coverage | 100% statements/lines/functions; 82.53% branches |
 | Nuxt production build | Passed; 1.96 MB total, 473 kB gzip |
 | Playwright Chromium | 1 workflow passed |
 | Live API/UI/WMS exercise | Passed; `SEG-EAST` recommended from 3 candidates |
